@@ -118,7 +118,7 @@ if (isset($_GET['id']))
 <input type="number" class="form-control" name="qteP" placeholder="Nombre de produits " value="<?php echo $qteP?>" onblur="verifqteP(this)"  style="width:500px"> </br>
 
 <label> Date de création </label>
-<td><input type="Date" class="form-control" name="datecreation" placeholder="Saisir la date de création" value="<?php echo $datecreation ?>"  style="width:500px"> </br>
+<input type="text" class="form-control" value="<?php echo date(DATE_RFC2822); ?>" name="datecreation"> </br>
 <label> Description: </label> 
 
 <td><input type="text" class="form-control" name="description" placeholder="Saisir la description" value="<?php echo $description ?>"  style="width:500px"> </br>

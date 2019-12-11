@@ -69,16 +69,35 @@ include('includes/navbar.php');
 unset( $_SESSION['Status']); 
 include "config.php";
 
+$req="select * from categorie";
+$db=config::getConnection();
+$listC=$db->query($req) ;
 
 if (isset($_POST['valider']))
 {
-	$req="insert INTO produit(ref,categ,nomP,prixVG,prixVL,carac,photo) values ('".$_POST['ref']."','".$_POST['categ']."','".$_POST['nomP']."',".$_POST['prixVG'].",".$_POST['prixVL'].",'".$_POST['carac']."','".$_POST['photo']."')";
+  $req="insert INTO produit(ref,categ,nomP,prixVG,prixVL,carac,photo) values ('".$_POST['ref']."','".$_POST['categ']."','".$_POST['nomP']."',".$_POST['prixVG'].",".$_POST['prixVL'].",'".$_POST['carac']."','".$_POST['photo']."')";
    
-	$db=config::getConnection();	
-	$sql=$db->prepare($req); 
-	$sql->execute(); 
+  $db=config::getConnection();  
+  $sql=$db->prepare($req); 
+  $sql->execute(); 
  echo "<script> ok(); </script>" ;
-	//header('location:afficherP.php');²
+ 
+  include "../Nexmo/src/NexmoMessage.php" ;
+
+
+  
+
+  /**
+     * To send a text message.
+     *
+     */
+  
+    // Step 1: Declare new NexmoMessage.
+    $nexmo_sms = new NexmoMessage('54e122ae','FFQpsxjSQfGb1Xzy');
+  
+    // Step 2: Use sendText( $to, $from, $message ) method to send a message. 
+    $info = $nexmo_sms->sendText( '21628655177', 'zanimo', 'votre reclamation a ete envoyer avec succes ' );
+  //header('location:afficherP.php');²
 }
 
 ?>
@@ -107,13 +126,15 @@ if (isset($_POST['valider']))
      <label style="font-weight: bold"> Catégorie </label> 
 
      <select name="categ"> 
+      <option>Choisissez une catégorie</option>
+      <?php
+foreach ($listC as $cat) 
+{
+  echo('<option> '.$cat['nomC'].' </option>'); 
+}
 
+?>
 
-<option> ---- </option>
-<option> Huiles </option>
-<option> Batteries </option>
-<option> Filtres </option>
-<option> Eau de refroidissement </option>
 
 </select> 
 </br> 
@@ -129,7 +150,7 @@ if (isset($_POST['valider']))
 
 <label style="font-weight: bold">Ajouter une photo</label>
 <input type="file" class="form-control" name="photo" > </br>
-<input type="submit" value="valider" name="valider" > 
+<input type="submit" value="valider" name="valider" action="produitmail.php"> 
 <input type="reset" value="Reset"> 
 
 </form>

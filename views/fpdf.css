@@ -1,0 +1,53 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+  background-color: ;
+}
+.table-bordered {
+  border: 1px solid #dee2e6;
+}
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #dee2e6;
+}
+
+.table-bordered thead th,
+.table-bordered thead td {
+  border-bottom-width: 2px;
+}
+
+.table-borderless th,
+.table-borderless td,
+.table-borderless thead th,
+.table-borderless tbody + tbody {
+  border: 0;
+}
+
+h1 {font:bold 200% Arial,sans-serif; color:#4000A0; margin-bottom:0.9em; text-align: center;}
+h2 {font:bold 95% Arial,sans-serif; color:#009688; margin-top:1.2em; margin-bottom:1em; margin-left: 3em;}
+dl.param dt {text-decoration:underline}
+dl.param dd {margin-top:1em; margin-bottom:1em}
+dl.param ul {margin-top:1em; margin-bottom:1em}
+tt, code, kbd {font-family:"Comic sans",Courier,monospace; font-size:82%}
+div.source {margin-top:1.4em; margin-bottom:1.3em}
+div.source pre {display:table; border:1px solid #24246A; width:100%; margin:0em; font-family:inherit; font-size:100%}
+div.source code {display:block; border:1px solid #C5C5EC; background-color:#F0F5FF; padding:6px; color:#000000}
+div.doc-source {margin-top:1.4em; margin-bottom:1.3em}
+div.doc-source pre {display:table; width:100%; margin:0em; font-family:inherit; font-size:100%}
+div.doc-source code {display:block; background-color:#E0E0E0; padding:4px}
+.kw {color:#000080; font-weight:bold}
+.str {color:#CC0000}
+.cmt {color:#008000}
+p.demo {text-align:center; margin-top:-0.9em}
+a.demo {text-decoration:none; font-weight:bold; color:#0000CC}
+a.demo:link {text-decoration:none; font-weight:bold; color:#0000CC}
+a.demo:hover {text-decoration:none; font-weight:bold; color:#0000FF}
+a.demo:active {text-decoration:none; font-weight:bold; color:#0000FF}
+.table{
+
+}

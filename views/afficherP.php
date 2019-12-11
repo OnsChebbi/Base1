@@ -1,6 +1,6 @@
-<script>
+﻿<script>
 function sure(){
-  return confirm("Voulez-vous vraiment supprimper ce produit?");
+  return confirm("Voulez-vous vraiment supprimer ce produit?");
 }
 </script>
 <?php 
@@ -8,23 +8,27 @@ include('SecuriteLogin.php');
 include('includes/header.php');
 include('includes/navbar.php');
 unset( $_SESSION['Status']); 
-include('config.php');
 
-
-$req="select * from produit";
-$db=config::getConnection();
-$listP=$db->query($req) ;
+include "../cores/produitC.php";
 
 
 if (isset ($_POST['supprimer']))
 {   
 $req="delete from produit where id=".$_POST['id'];
-
+$db=config::getConnection();
 $sql=$db->prepare($req);
 $sql->execute();
 
- // header ('location:afficherP.php');
 }
+
+ $prod=new produitC;
+    if (isset($_GET['key'])) {
+        $listP = $prod->rechercheproduit($_GET['key']);
+    } else {
+        $listP = $prod->afficherproduit();
+    }
+
+
 
 ?>
 <html>
@@ -32,15 +36,47 @@ $sql->execute();
   <title>KIMONLU-Stocks des produits</title>
   <meta charset="utf-8">
 </head>
-<body>
-        <div class="card mb-3">
+<body><div class="page-container">
+
+                <div class="main-content">
+                    <div class="container-fluid">
+
+                        <div class="breadcrumb-wrapper row">
+                            <div class="col-12 col-lg-3 col-md-6">
+                                
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header border-bottom">
+                                       <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-            Liste des produits </div>
-            
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" cellspacing="0">
+           Liste des produits </div>
+         
+                                    </div>
+                                     <div style="margin-left: 1.2em" >
+                                    <a href="pdf.php"> Imprimer cette page</a>
+                                  </div>
+                                    <div class="card-body">
+                                        <div class="row justify-content-end">
+                                            <div class="col-4" style="margin: 10px">
+                                                <form method="get" action="afficherP.php">
+                                                    <input type="text" name="key" placeholder="chercher..." />
+                                                    <input type="submit" value="chercher" placeholder="chercher..." class="btn btn-default btn-primary" />
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                      
+                                            <table id="" class="table table-bordered">
+                                 
                 <thead>
                   <tr>
                    
@@ -57,6 +93,7 @@ $sql->execute();
 </thead>
 
 <?php
+$total=0;
 foreach ($listP as $prod)
 {
 
@@ -74,17 +111,18 @@ echo('<td>'.$prod['prixVG'].'</td>');
 echo('<td>'.$prod['prixVL'].'</td>');
 
 echo('<td>'.$prod['carac'].'</td>');
+$total+=1;
 
 ?>
 <td>
 <td>
 <form method="POST" action="afficherP.php" >
-<input type="submit" name="supprimer" value="supprimer" onclick="return sure()">
-<input type="hidden" value="<?php echo $prod['id']; ?>" name="id">
+<input style="background-color: #495156" class="btn btn-primary btn-block" onclick="sure()" type="submit" name="supprimer" value="supprimer">
+<input class="btn btn-primary btn-block" type="hidden" value="<?php echo $prod['id']; ?>" name="id">
 </form>
 </td>
 <td>
-<a href="modifierP.php?id=<?php echo $prod['id'] ?>">
+<a class="btn btn-primary btn-block" href="modifierP.php?id=<?php echo $prod['id'] ?>">
 Modifier
 </a>
 <?php
@@ -96,13 +134,12 @@ echo("</tr>");
 
 
 </table> 
-<form method="get" action="ajouterP.php" align="center">
-   <button type="submit"> <a>  Ajouter un autre produit  </a> </button>
+ <h5  style="color: white; background-color: green; width: 200px;" align="center"> <?php echo('Total de produits:'.$total)?></h5>
+<form method="get" action="ajouterP.php" >
+   <button align="center" style="background-color: #0c6071; width: 300px" class="btn btn-primary btn-block" type="submit" > <a>  Ajouter un autre produit  </a> </button>
 </form>
 </br>
 
-
-      <!-- /.container-fluid -->
 
   
 </br>

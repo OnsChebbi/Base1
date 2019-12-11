@@ -24,6 +24,9 @@
    }
 }
 
+
+
+ 
   function verifRef(myform)
 {  
   if(myform.value.length==0)
@@ -44,12 +47,12 @@ function verifForm(f)
   
    var qtePOk = verifqteP(f.qteP);
     var refCOk = verifRef(f.refC);
-   
-   if(qtePOk && refCOk)
+  
+   if(qtePOk && refCOk )
       return true;
    else
    {
-      alert("Veuillez remplir correctement tous les champs");
+      alert("Veuillez remplir correctement tous les myforms");
       return false;
    }
 }
@@ -65,13 +68,15 @@ include('SecuriteLogin.php');
 include('includes/header.php');
 include('includes/navbar.php');
 include "config.php";
+
 unset( $_SESSION['Status']); 
+
 
 
 
 if (isset($_POST['valider']))
 {  
-	$req="insert INTO categorie(refC,nomC,qteP,datecreation,description) values ('".$_POST['refC']."','".$_POST['nomC']."',".$_POST['qteP'].",'".$_POST['datecreation']."','".$_POST['description']."')";
+	$req="insert INTO categorie(refC,nomC,qteP,datecreation,description) values ('".$_POST['refC']."','".$_POST['nomC']."',0,'".$_POST['datecreation']."','".$_POST['description']."')";
 	 $db=config::getConnection(); 
 	$sql=$db->prepare($req); 
 	$sql->execute(); 
@@ -111,11 +116,14 @@ if (isset($_POST['valider']))
 <label> Nom de la catégorie </label> 
 <input type="text" class="form-control" name="nomC" placeholder="Saisir le nom" value="" style="width:500px"> </br>
 
-<label> Nombre de produits </label> 
-<input type="number" class="form-control" name="qteP" placeholder="Nombre de produits " onblur="verifqteP(this)" value="" style="width:500px"> </br>
+
 
 <label> Date de création </label>
-<td><input type="Date" class="form-control" name="datecreation" placeholder="Saisir la date de création" value="" style="width:500px"> </br>
+
+
+
+
+<input type="text" class="form-control" value="<?php echo date(DATE_RFC2822); ?>" name="datecreation">
 <label> Description: </label> 
 <textarea type="text"  style="width:500px" name="description" value="" placeholder="Décrire cette catégorie" >
 </textarea> </br>
